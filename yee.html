@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <title>내 개인 페이지</title>
+
+    <link rel="stylesheet" href="/static/css/yee.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+    <script>
+        $(document).ready(function () {
+            show_order();
+        });
+        function show_order() {
+            $.ajax({
+                type: "GET",
+                url: "/yee_comment",
+                data: {},
+                success: function (response) {
+                    let rows = response['comments']
+                    for (let i = 0; i < rows.length; i++){
+                        let name = rows[i]['name']
+                        let comment = rows[i]['comment']
+
+                        let temp_html =`<div class="card">
+                                          <div class="card-body">
+                                            <blockquote class="blockquote mb-0">
+                                              <p>${name}</p>
+                                              <footer class="blockquote-footer"><cite title="Source Title">${comment}</cite></footer>
+                                            </blockquote>
+                                          </div>
+                                        </div>`
+                        $('#comment-list').append(temp_html)
+                    }
+                }
+            });
+        }
+        function save_order() {
+
+            let name = $('#name').val()
+            let comment = $('#comment').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/yee_comment',
+                data: {name_give:name, comment_give:comment},
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <div class="mytitle" id="top">
+        <h1><a href="/"><span style="font-family: 'Gaegu'; font-size: 1.2em;">let 리액트 천재</span></a></h1>
+        <p><span style="font-family: 'Gaegu'; font-size: 1.1em;">~얼렁뚱땅 빙글빙글 돌아가는 코딩의 하루~</span></p>
+    </div>
+    <div class="container">
+        <div class="text-container">
+            <div class="zzang-box">
+                <div class="zzang-image"></div>
+            </div>
+            <div class="textbox">
+                <div class="d-flex align-items-start">
+                  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">나의 MBTI</button>
+                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">오늘의 TMI</button>
+                    <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">나의 장점</button>
+                    <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">협업 스타일</button>
+                    <button class="nav-link" id="v-pills-blog-tab" data-bs-toggle="pill" data-bs-target="#v-pills-blog" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">블로그 주소</button>
+                  </div>
+                  <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">ISFP 그 자체인 사람.
+                            <br>주말엔 침대에 누워서 하루 종일도 지낼 수 있어요.
+                            <br>갈등을 싫어하는 평화주의자🕊
+                            <br>제일 자주 하는 생각: 그럴 수 있지
+                                <div class="text-image">
+                                        <img src="https://blog.kakaocdn.net/dn/c3CX86/btrP7Tker6w/1UPsuszHOKdzp4vFnLFvQ0/img.jpg" width="600" height="200">
+                                </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">유미의 세포들 처음으로 정주행 중인데 너무 재밌어요..!
+                            <br>요즘 Taylor Swift-Anti-Hero 질리도록 듣고 있습니다.
+                            <br>코딩할 때 유령송이나 lofi hip hop 영상 틀어 놓는 것을 좋아합니다.
+                            <br><div style="color: darkgray; font-size: 0.9em;">유령송이 궁금하다면 아래 이미지를 클릭하세요!</div>
+                            <div class="text-image">
+                                <a href="https://youtu.be/653KDIwovtM" target='_blank'><img style="border-radius: 20px;" src="https://blog.kakaocdn.net/dn/A3T1m/btrP91uKY4l/ScN1gY8VfYpTffkQvyRDhK/img.jpg" width="600" height="200"></a>
+                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">기본적으로 독학하는 것을 선호하기 때문에 자기주도적 학습 능력이 높다!
+                            <br>쉽게 낙담하지 않고 긍정적으로 생각하려 노력합니다.
+                            <br>실패하더라도 성장할 수 있으니까 오히려 좋아😊
+                            <div class="text-image">
+                                <img style="border-radius: 20px;" src="https://blog.kakaocdn.net/dn/deP4Ij/btrP80cdYPL/KXYEvIxvoLQflZwwDBhQW0/img.jpg" width="600" height="200">
+                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">대체적으로 팀원들의 의견을 경청하는 편이고
+                            <br>중간중간 의견을 말하거나 궁금한 점을 물어봅니다.
+                            <br>팀원분들에게서 많이 배우며 성장하고 있습니다.
+                            <div class="text-image">
+                                <img style="border-radius: 20px;" src="https://blog.kakaocdn.net/dn/bvtGFD/btrP9jbtXzN/QwBSndVwzsOrnzsKH7B8Ok/img.jpg" width="600" height="200">
+                            </div>
+                    </div>
+                    <div class="tab-pane fade" id="v-pills-blog" role="tabpanel" aria-labelledby="v-pills-blog-tab"><a href="https://divheer.tistory.com/">https://divheer.tistory.com/</a>
+                            <br>저의 티스토리 블로그 주소입니다!
+                            <br>노베이스 비전공자의 개발자 도전기, 함께 하실래요?🐤
+                            <div class="text-image">
+                                <a href="https://divheer.tistory.com/" target='_blank'><img src="https://blog.kakaocdn.net/dn/lQZNs/btrP90ijWnv/2S4kKpbw2KTH9SRmGr2pQk/img.jpg" width="600" height="200"></a>
+                            </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="image"></div>
+    </div>
+
+    <div class="commentbox">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="name" placeholder="name@example.com">
+          <label for="floatingInput">닉네임</label>
+        </div>
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                style="height: 100px"></textarea>
+            <label for="floatingTextarea2">응원 댓글</label>
+        </div>
+        <button type="button" class="btn btn-dark" onclick="save_order()">방명록 남기기</button>
+    </div>
+    <div id="comment-list">
+    </div>
+    <div class="navigate">
+        <div class="item box3" onclick="location.href='/go'">
+            <img alt="고현석 프로필 보러 가기"
+                 src="https://static-new.miraheze.org/bigforestwiki/d/dc/%EA%B0%9C%EB%91%A5%EC%9D%B4.png"
+                 width=250" height="250">
+            <span>고현석</span>
+        </div>
+        <div class="item box3" onclick="location.href='/kimw'">
+            <img alt="김원준 프로필 보러 가기"
+                 src="https://blog.kakaocdn.net/dn/Hhggo/btrQz5YHPLm/V2uyyvaS4VkEWAoNVKvOr1/img.png"
+                 width=250" height="250">
+            <span>김원준</span>
+
+        </div>
+        <div class="item box3" onclick="location.href='/kimm'">
+                <img alt="김명준"
+                     src="https://blog.kakaocdn.net/dn/c01UhB/btrQywCjxrd/BBIjqjTpBkQBTboopXofzK/img.png"
+                     width=250" height="250">
+            <span>김명준</span>
+
+        </div>
+        <div class="item box3" onclick="location.href='/mari'">
+                <img alt="남마리나 프로필 보러 가기"
+                     src="https://w.namu.la/s/cb44538b575f372318ce9c28cd806dde1e6ac146514283b57b696ad7226ca18971fdae5716367e639a3345594b8cdfbf119bcc971b7a686b17c0873402ad659d281547a33a1363f6d4e8639bc6719ed63d30020f3be3c696a10a0e66d0a8d729"
+                     width=250" height="250">
+            <span>남마리나</span>
+        </div>
+    </div>
+
+    <div class="downbar">
+        <div class="downwrap">
+            <div class="blog_navigate">
+                <div class="item box3" onclick="location.href='https://hinu.tistory.com'"><span>현석님 blog<span></div>
+                <div class="item box3" onclick="location.href='https://velog.io/@kimwonjuun '"><span>원준님 blog<span></div>
+                <div class="item box3" onclick="location.href='https://maengjun.tistory.com'"><span>명준님 blog<span></div>
+                <div class="item box3" onclick="location.href='https://velog.io/@yangmal'"><span>마리나님 blog<span></div>
+            </div>
+        </div>
+        <a href="#top"><img src="https://www.pngfind.com/pngs/m/383-3837846_up-arrow-icon-top-move-to-top-button.png"></a>
+    </div>
+
+</body>
+
